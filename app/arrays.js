@@ -33,7 +33,7 @@ define(function() {
     removeWithoutCopy : function(arr, item) {
       var i,
           len = arr.length;
-      for(i=0; i<len; i++) {
+      for(i=0; i < len; i++) {
         if(arr[i] === item) {
           arr.splice(i, 1);
           i -= 1;
@@ -70,23 +70,56 @@ define(function() {
     },
 
     insert : function(arr, item, index) {
-
+      arr.splice(index, 0, item);
+      return arr;
     },
 
     count : function(arr, item) {
-
+      var count = 0,
+          i;
+      for (i = 0; i < arr.length; i++) {
+        if (arr[i] === item) {
+          count++;
+        }
+      }
+      return count;
     },
 
     duplicates : function(arr) {
+      var seen = {};
+      var dup = [];
 
+      for (var i = 0, len = arr.length; i < len; i++) {
+        seen[arr[i]] = seen[arr[i]] ? seen[arr[i]] + 1 : 1;
+      }
+
+      for (var item in seen) {
+        if (seen.hasOwnProperty(item) && seen[item] > 1) {
+          dup.push(item);
+        }
+      }
+
+      return dup;
     },
 
     square : function(arr) {
-
+      var i;
+      for(i=0; i < arr.length; i++) {
+        arr[i] = arr[i]*arr[i];
+      }
+      return arr;
     },
 
     findAllOccurrences : function(arr, target) {
+      var ocur = [];
 
+      for (var i = 0, len = arr.length; i < len; i++) {
+        if (arr[i] === target) {
+          ocur.push(i);
+        }
+      }
+
+      return ocur;
     }
   };
 });
