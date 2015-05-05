@@ -59,10 +59,26 @@ define(function() {
     },
 
     curryIt : function(fn) {
+
       function applyArguments(fn, arguments) {
         return fn.apply(null, arguments);
       }
-      // in progres...
+
+      function getArgumentAccumulator(accumulatedArguments, expectedArgumentsCount) {
+        return function (currentArgument) {
+          accumulatedArguments.push(currentArgument);
+
+          var allArgumentsProvided = accumulatedArguments.length === expectedArgumentsCount;
+
+          if (allArgumentsProvided) {
+            return fn.apply(null, accumulatedArguments);
+          } else {
+            return getArgumentAccumulator(accumulatedArguments, expectedArgumentsCount);
+          }
+        };
+      }
+
+      return getArgumentAccumulator([], fn.length);
     }
   };
 });
